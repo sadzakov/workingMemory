@@ -19,21 +19,25 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.sofija.sadzakov.GameMain;
 
+import helpers.CounterRightAnswer;
+import helpers.CounterWrongAnswer;
 import helpers.GameInfo;
 
-public class MainMenu implements Screen {
 
-    private GameMain game;
+public class RightAnswer implements Screen {
+
     private World world;
+    private GameMain game;
     private Sprite bg;
     private OrthographicCamera box2DCamera;
     private Box2DDebugRenderer debugRenderer;
     private Stage stage;
     private Viewport viewport;
+    public int counter;
 
     private Image btn;
 
-    public MainMenu(GameMain game) {
+    public RightAnswer(GameMain game) {
         this.game = game;
 
         box2DCamera = new OrthographicCamera();
@@ -51,11 +55,10 @@ public class MainMenu implements Screen {
         addListener();
 
         stage.addActor(btn);
-
     }
 
     void createBackground() {
-        bg = new Sprite(new Texture("menu/mainmenu.jpg"));
+        bg = new Sprite(new Texture("background/bravo.jpg"));
         bg.setPosition(0, 0);
     }
 
@@ -68,9 +71,55 @@ public class MainMenu implements Screen {
     void addListener() {
         btn.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Car(game));
+                counter = CounterRightAnswer.getRightInstance().getResult();
+                changeScreen();
             }
         });
+    }
+
+    void changeScreen() {
+        switch (counter) {
+            case 1 :
+                game.setScreen(new Bear(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+            case 2 :
+                game.setScreen(new Book(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+            case 3 :
+                game.setScreen(new Apple(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+            case 4 :
+                game.setScreen(new Cloud(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+            case 5 :
+                game.setScreen(new House(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+            case 6 :
+                game.setScreen(new Banana(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+            case 7 :
+                game.setScreen(new Monkey(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+            case 8 :
+                game.setScreen(new Pencil(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+            case 9 :
+                game.setScreen(new Orange(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+            case 10 :
+                game.setScreen(new Pumpkin(game));
+                CounterWrongAnswer.getWrongInstance().getResult();
+                break;
+        }
     }
 
     @Override
@@ -89,13 +138,12 @@ public class MainMenu implements Screen {
         stage.getBatch().begin();
 
         stage.getBatch().setColor(Color.WHITE);
-        stage.getBatch().draw(bg, bg.getX() - 100, bg.getY() + 130);
+        stage.getBatch().draw(bg, bg.getX() - 5, bg.getY() + 130);
 
         stage.getBatch().end();
         stage.draw();
         stage.act();
         debugRenderer.render(world, box2DCamera.combined);
-
     }
 
     @Override
